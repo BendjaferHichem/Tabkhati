@@ -3,7 +3,7 @@
   "builds": [{
     "src": "server/server.js",
     "use": "@vercel/node",
-    "config": { "includeFiles": ["server/database/tabkhty.db"] }
+    "config": { "includeFiles": "server/database/*.db" }
   }],
   "routes": [{ "src": "/(.*)", "dest": "server/server.js" }]
 }
