@@ -1,0 +1,1269 @@
+/* =========================================================
+   طبختي — نظام التصميم
+   لوحة الألوان: أخضر عشبي دافئ + خردلي/زعفراني + طوبي حار
+   ========================================================= */
+
+:root {
+  --color-bg: #faf6ee;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f2ece0;
+  --color-ink: #2a241d;
+  --color-ink-soft: #6b6052;
+  --color-line: #e6dcc9;
+
+  --color-primary: #3f6e52;       /* أخضر عشبي - أزرار وعناصر أساسية */
+  --color-primary-dark: #2e5440;
+  --color-primary-soft: #e4ede6;
+
+  --color-accent: #e2932e;        /* خردلي/زعفراني - CTA الرئيسي */
+  --color-accent-dark: #c97a1c;
+  --color-accent-soft: #fbecd3;
+
+  --color-warm: #b5502d;          /* طوبي حار - تنبيهات ودرجات ناقصة */
+  --color-warm-soft: #f8e3d7;
+
+  --color-success: #3f6e52;
+  --color-success-soft: #e4ede6;
+  --color-missing: #b5502d;
+  --color-missing-soft: #f8e3d7;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 2px 14px rgba(42, 36, 29, 0.07);
+  --shadow-pop: 0 10px 30px rgba(42, 36, 29, 0.16);
+
+  --font-display: 'Cairo', 'Tahoma', sans-serif;
+  --font-body: 'Tajawal', 'Tahoma', sans-serif;
+
+  --header-h: 64px;
+  --bottom-nav-h: 62px;
+
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  direction: rtl;
+  text-align: right;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(var(--bottom-nav-h) + 12px);
+}
+
+h1, h2, h3, h4, .display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  margin: 0;
+  color: var(--color-ink);
+  line-height: 1.3;
+}
+
+p { margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+img { max-width: 100%; display: block; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+/* ===================== الرأس ===================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(250, 246, 238, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.site-header__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  height: var(--header-h);
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--color-primary-dark);
+}
+
+.brand__mark { font-size: 1.5rem; }
+
+.site-nav {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .site-nav {
+    display: flex;
+    gap: 4px;
+  }
+  .site-nav a {
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    color: var(--color-ink-soft);
+    font-size: 0.95rem;
+  }
+  .site-nav a.active, .site-nav a:hover {
+    background: var(--color-primary-soft);
+    color: var(--color-primary-dark);
+  }
+}
+
+/* ===================== التنقل السفلي (موبايل) ===================== */
+
+.bottom-nav {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 40;
+  height: var(--bottom-nav-h);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (min-width: 720px) {
+  .bottom-nav { display: none; }
+  body { padding-bottom: 24px; }
+}
+
+.bottom-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+}
+
+.bottom-nav a .icon { font-size: 1.3rem; }
+
+.bottom-nav a.active { color: var(--color-primary-dark); }
+
+/* ===================== البطل (Hero) ===================== */
+
+.hero {
+  padding: 40px 0 8px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: var(--color-ink-soft);
+  font-size: 1.05rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ===================== الأقسام ===================== */
+
+.section {
+  padding: 28px 0;
+}
+
+.section__title {
+  font-size: 1.15rem;
+  margin-bottom: 4px;
+}
+
+.section__subtitle {
+  color: var(--color-ink-soft);
+  font-size: 0.92rem;
+  margin-bottom: 16px;
+}
+
+/* ===================== شرائح المكونات المختارة ===================== */
+
+.selected-bar {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 10;
+  background: var(--color-bg);
+  padding: -7px 0;
+  margin-bottom: 5px;
+}
+
+.selected-count {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.clear-all-btn {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-warm);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+}
+.clear-all-btn:hover { text-decoration: underline; }
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+
+/* عند الالتصاق بأعلى الصفحة أثناء التمرير: صف واحد مضغوط فقط */
+.selected-bar.collapsed .chip-row {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.selected-bar.collapsed .chip-row::-webkit-scrollbar { display: none; }
+
+.chip-more {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-alt);
+  color: var(--color-ink-soft);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+
+
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 2px 2px 2px 2px;
+  border-radius: var(--radius-pill);
+  font-size: 0.88rem;
+  font-weight: 700;
+  animation: pop-in 0.18s ease;
+}
+
+.chip button {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.chip button:hover { background: rgba(255,255,255,0.4); }
+
+@keyframes pop-in {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ===================== أقسام الثلاجة ===================== */
+
+.fridge-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding:  4px 0 14px;
+  scrollbar-width: none;
+}
+.fridge-tabs::-webkit-scrollbar { display: none; }
+
+.fridge-tab {
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color .15s;
+}
+
+.fridge-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.ingredient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 10px;
+}
+
+.ingredient-card {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: 12px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  transition: transform 0.12s ease, border-color .12s, background .12s;
+  min-height: 78px;
+}
+
+.ingredient-card .emoji { font-size: 1.6rem; }
+
+.ingredient-card:active { transform: scale(0.95); }
+
+.ingredient-card.selected {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.search-field {
+  position: relative;
+  margin-bottom: 14px;
+}
+
+.search-field input {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-line);
+  background: var(--color-surface);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-ink);
+}
+
+.search-field input:focus { border-color: var(--color-primary); }
+
+.search-results {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.search-result-pill {
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-line);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.search-result-pill.custom-add {
+  background: var(--color-accent-soft);
+  border: 1.5px dashed var(--color-accent);
+  color: var(--color-accent-dark);
+}
+
+.chip.chip-custom {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border: 1.5px dashed var(--color-ink-soft);
+}
+.chip.chip-custom button { background: var(--color-surface-alt); color: var(--color-ink-soft); }
+
+/* ===================== الوقت ===================== */
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 480px) {
+  .time-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.time-card {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: 16px 8px;
+  text-align: center;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.time-card .icon { font-size: 1.4rem; }
+
+.time-card.selected {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+  color: var(--color-accent-dark);
+}
+
+.custom-time {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.custom-time input {
+  width: 90px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-line);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+/* ===================== التفضيلات الإضافية ===================== */
+
+.disclosure {
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.disclosure__toggle {
+  width: 100%;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+.disclosure__toggle .chevron {
+  transition: transform 0.2s ease;
+}
+
+.disclosure.open .chevron { transform: rotate(180deg); }
+
+.disclosure__panel {
+  display: none;
+  padding: 4px 16px 16px;
+}
+
+.disclosure.open .disclosure__panel { display: block; }
+
+.tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-toggle {
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-line);
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--color-surface);
+}
+
+.tag-toggle.selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* ===================== أزرار ===================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  font-size: 1rem;
+  transition: transform 0.1s ease, box-shadow .15s;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(226, 147, 46, 0.35);
+}
+.btn-primary:hover { background: var(--color-accent-dark); }
+
+.btn-secondary {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-line);
+  color: var(--color-ink);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+.btn-block { width: 100%; }
+.btn-lg { padding: 17px 24px; font-size: 1.08rem; }
+
+.cta-wrap {
+  text-align: center;
+  padding: 10px 0 4px;
+}
+
+.cta-hint {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+/* ===================== صفوف قابلة للتمرير الأفقي + أسهم ===================== */
+
+.scroll-row-wrap {
+  position: relative;
+}
+
+.scroll-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  padding: 4px 2px 10px;
+  scrollbar-width: none;
+}
+.scroll-row::-webkit-scrollbar { display: none; }
+.scroll-row > * { scroll-snap-align: start; }
+
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-line);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  color: var(--color-ink);
+  opacity: 0.97;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.scroll-arrow:active { transform: translateY(-50%) scale(0.92); }
+.scroll-arrow.is-hidden { opacity: 0; pointer-events: none; }
+
+/* RTL: "prev" (start) points right, "next" (end) points left */
+.scroll-arrow--start { right: -6px; }
+.scroll-arrow--end { left: -6px; }
+
+@media (min-width: 640px) {
+  .scroll-arrow--start { right: -18px; }
+  .scroll-arrow--end { left: -18px; }
+}
+
+/* أخفِ الأسهم تلقائياً على الشاشات اللمسية الضيقة جداً حيث التمرير باللمس أوضح */
+@media (hover: none) and (pointer: coarse) and (max-width: 420px) {
+  .scroll-arrow { width: 32px; height: 32px; font-size: 0.9rem; }
+}
+
+/* ===================== بطاقة "هيرو" ملونة (بديل الصورة) ===================== */
+
+.recipe-hero {
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+  position: relative;
+  overflow: hidden;
+  color: rgba(255,255,255,0.96);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.12);
+}
+
+.recipe-hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recipe-hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.28), transparent 55%);
+}
+
+.recipe-hero-grad-0 { background: linear-gradient(135deg, #c9702f, #e2932e); }
+.recipe-hero-grad-1 { background: linear-gradient(135deg, #3f6e52, #6fa37f); }
+.recipe-hero-grad-2 { background: linear-gradient(135deg, #b5502d, #e2792e); }
+.recipe-hero-grad-3 { background: linear-gradient(135deg, #8a6d3b, #c9a24b); }
+.recipe-hero-grad-4 { background: linear-gradient(135deg, #4a7a63, #8bb89a); }
+.recipe-hero-grad-5 { background: linear-gradient(135deg, #a63f3f, #d97a5a); }
+.recipe-hero-grad-6 { background: linear-gradient(135deg, #5c7a3f, #96b85f); }
+.recipe-hero-grad-7 { background: linear-gradient(135deg, #9c5b8c, #cf8fb8); }
+
+/* ===================== أفكار سريعة / بطاقات صغيرة ===================== */
+
+.quick-card {
+  flex: 0 0 auto;
+  width: 168px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line);
+  overflow: hidden;
+  text-align: center;
+}
+
+.quick-card .recipe-hero { width: 100%; height: 80px; border-radius: 0; font-size: 2.4rem; }
+.quick-card .quick-card__body { padding: 10px 12px 12px; }
+.quick-card .name { font-weight: 700; font-size: 0.88rem; }
+.quick-card .time { font-size: 0.78rem; color: var(--color-ink-soft); margin-top: 4px; }
+
+/* ===================== صفحة التصفح: البطاقة المميزة ===================== */
+
+.featured-card {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.featured-card__hero {
+  width: 100%;
+  height:   200px;
+  border-radius: 0;
+  font-size: 4rem;
+  position: relative;
+}
+
+
+.featured-card__hero .recipe-hero {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+.featured-card__hero.autoplay-bar::before {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0; left: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.85);
+  transform-origin: right center;
+  animation: autoplay-fill var(--autoplay-ms, 6000ms) linear forwards;
+}
+
+@keyframes autoplay-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.featured-card__body { padding: 18px 20px 20px; }
+
+.featured-card__badge {
+  display: inline-block;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 8px;
+}
+
+.featured-nav {
+  position: absolute;
+  top: 100px; /* نصف ارتفاع .featured-card__hero (200px) لتوسيطه عمودياً داخل الصورة فقط */
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: var(--shadow-card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  color: var(--color-ink);
+  z-index: 3;
+}
+.featured-nav--prev { right: 12px; }
+.featured-nav--next { left: 12px; }
+.featured-nav:active { transform: translateY(-50%) scale(0.92); }
+
+.featured-dots { text-align: center; margin-top: 10px; font-size: 0.8rem; color: var(--color-ink-soft); }
+
+/* ===================== صفحة التصفح: الشبكة ===================== */
+
+.discover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+/* ===================== كيف يعمل ===================== */
+
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+
+.how-step .icon {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin: 0 auto 8px;
+}
+
+.how-step .label { font-size: 0.85rem; font-weight: 700; }
+
+/* ===================== حالة التحميل ===================== */
+
+.loading-screen {
+  display: none;
+  text-align: center;
+  padding: 60px 0 30px;
+}
+
+.loading-screen.active { display: block; }
+
+.loading-visual {
+  font-size: 3rem;
+  animation: bob 1.4s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-6deg); }
+}
+
+.loading-text {
+  margin-top: 16px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  min-height: 24px;
+}
+
+/* ===================== النتائج ===================== */
+
+.results-header {
+  text-align: center;
+  padding: 6px 0 18px;
+}
+
+.recipe-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.recipe-card .recipe-hero {
+  width: 100%;
+  height: 260px;
+  border-radius: 0;
+  font-size: 3.2rem;
+}
+
+.recipe-card__body { padding: 16px 18px 18px; }
+
+.recipe-card__top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.recipe-card__title {
+  font-size: 1.1rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.recipe-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--color-ink-soft);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.badge-match-high { background: var(--color-success-soft); color: var(--color-primary-dark); }
+.badge-match-mid { background: var(--color-accent-soft); color: var(--color-accent-dark); }
+.badge-match-low { background: var(--color-missing-soft); color: var(--color-missing); }
+.badge-diff { background: var(--color-surface-alt); color: var(--color-ink-soft); }
+
+.recipe-card__ai {
+  margin-top: 10px;
+  font-size: 0.92rem;
+  color: var(--color-ink);
+  background: var(--color-surface-alt);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.ingredient-status {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.status-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-pill.have { background: var(--color-success-soft); color: var(--color-primary-dark); }
+.status-pill.missing { background: var(--color-missing-soft); color: var(--color-missing); }
+
+.recipe-card__actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.icon-btn.fav.active { color: var(--color-warm); border-color: var(--color-warm); }
+
+/* ===================== حالات فارغة ===================== */
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-ink-soft);
+}
+
+.empty-state .emoji { font-size: 2.6rem; margin-bottom: 10px; }
+.empty-state h3 { font-family: var(--font-body); font-size: 1.05rem; color: var(--color-ink); margin-bottom: 6px; }
+
+/* ===================== النافذة المنبثقة (تفاصيل الوصفة) ===================== */
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(30, 26, 20, 0.55);
+  z-index: 100;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.open { display: flex; }
+
+@media (min-width: 640px) {
+  .modal-overlay { align-items: center; }
+}
+
+.modal-sheet {
+  background: var(--color-bg);
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 24px 24px 0 0;
+  padding: 20px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  box-shadow: var(--shadow-pop);
+  animation: sheet-up 0.22s ease;
+}
+
+@media (min-width: 640px) {
+  .modal-sheet { border-radius: var(--radius-lg); }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  margin-inline-start: auto;
+}
+
+.modal-title-row {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.recipe-detail__emoji {
+  margin: -5px -20px 14px;
+}
+.recipe-detail__emoji .recipe-hero {
+  width: 100%;
+  height: 240px;
+  border-radius: 0;
+  font-size: 3.4rem;
+}
+
+.recipe-detail__stats {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  text-align: center;
+}
+
+.recipe-detail__stats strong {
+  display: block;
+  color: var(--color-ink);
+  font-size: 0.95rem;
+}
+
+.detail-section { margin-top: 20px; }
+.detail-section h3 { font-size: 1rem; margin-bottom: 10px; }
+
+.ingredient-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.ingredient-list li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.92rem;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+.ingredient-list li.missing { background: var(--color-missing-soft); color: var(--color-missing); }
+
+.steps-list { list-style: none; padding: 0; margin: 0; counter-reset: step; display: flex; flex-direction: column; gap: 12px; }
+.steps-list li {
+  counter-increment: step;
+  display: flex; gap: 10px;
+  font-size: 0.94rem;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--color-line);
+}
+.steps-list li::before {
+  content: counter(step);
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.8rem;
+}
+
+.detail-actions { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+
+/* ===================== وضع الطبخ ===================== */
+
+.cooking-mode {
+  display: none;
+  position: fixed; inset: 0;
+  z-index: 200;
+  background: var(--color-bg);
+  flex-direction: column;
+}
+.cooking-mode.open { display: flex; }
+
+.cooking-header {
+  padding: 16px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.progress-bar {
+  height: 6px;
+  background: var(--color-line);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin: 0 18px 10px;
+}
+.progress-bar__fill {
+  height: 100%;
+  background: var(--color-accent);
+  transition: width 0.25s ease;
+}
+
+.cooking-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 28px;
+  text-align: center;
+}
+
+.cooking-step-label {
+  color: var(--color-ink-soft);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.cooking-step-text {
+  font-size: 1.35rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  max-width: 420px;
+}
+
+.cooking-footer {
+  display: flex; gap: 10px;
+  padding: 18px;
+  padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ===================== التوست ===================== */
+
+.toast-stack {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-h) + 14px);
+  left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 300;
+  pointer-events: none;
+}
+
+@media (min-width: 720px) {
+  .toast-stack { bottom: 24px; }
+}
+
+.toast {
+  background: var(--color-ink);
+  color: #fff;
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-pop);
+  animation: toast-in 0.2s ease;
+}
+
+@keyframes toast-in {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===================== قوائم عامة (المخطط الأسبوعي / التسوق) ===================== */
+
+.day-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none;
+  margin-bottom: 14px;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+
+.day-tab {
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+.day-tab.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+.meal-slot {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.meal-slot__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+  width: 54px;
+  flex-shrink: 0;
+}
+
+.meal-slot__emoji { font-size: 1.7rem; }
+
+.meal-slot__info { flex: 1; min-width: 0; }
+.meal-slot__name { font-weight: 700; font-size: 0.94rem; }
+.meal-slot__time { font-size: 0.78rem; color: var(--color-ink-soft); }
+
+.meal-slot__actions { display: flex; gap: 4px; }
+
+.shopping-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--color-line);
+  font-weight: 600;
+}
+
+.shopping-item.checked .shopping-item__label {
+  text-decoration: line-through;
+  color: var(--color-ink-soft);
+}
+
+.checkbox {
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  border: 2px solid var(--color-line);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  color: transparent;
+}
+.checkbox.checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.shopping-item__emoji { font-size: 1.2rem; }
+
+/* ===================== طباعة ===================== */
+
+@media print {
+  .site-header, .bottom-nav, .btn, .icon-btn, .recipe-card__actions,
+  .toast-stack, .fridge-tabs, .selected-bar, .search-field { display: none !important; }
+  body { padding-bottom: 0; background: #fff; }
+  .container { max-width: 100%; }
+}
+
+/* ===================== أدوات مساعدة ===================== */
+
+.mt-0 { margin-top: 0; }
+.text-center { text-align: center; }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.row-between { display: flex; align-items: center; justify-content: space-between; }
+
+
+
+
+
+
+.site-footer {
+  text-align: center;
+  padding: 32px 20px 20px;
+  margin-top: 20px;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-ink-soft);
+  font-size: 0.85rem;
+}
+
+.site-footer__brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 6px;
+}
+
+.site-footer__copy {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  opacity: 0.8;
+}

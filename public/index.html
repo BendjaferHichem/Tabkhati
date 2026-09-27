@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>طبختي — ماذا سنطبخ اليوم؟</title>
+<meta name="description" content="أخبرنا بما لديك في الثلاجة وسنقترح عليك وجبات لذيذة يمكنك تحضيرها الآن.">
+<meta property="og:title" content="طبختي — ماذا سنطبخ اليوم؟">
+<meta property="og:description" content="اختر ما لديك، حدد وقتك، واحصل على أفكار طبخ مناسبة لك.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="/" class="brand"><span class="brand__mark">🍳</span> طبختي</a>
+    <nav class="site-nav">
+      <a href="/" class="active">الرئيسية</a>
+      <a href="discover.html">تصفح وصفات جديدة</a>
+      <a href="favorites.html">المفضلة</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ===== البطل ===== -->
+  <section class="hero">
+    <h1>ماذا سنطبخ اليوم؟</h1>
+    <p>أخبرنا بما لديك في الثلاجة وسنساعدك في اختيار وجبة مناسبة خلال ثوانٍ.</p>
+  </section>
+
+    <!-- ===== شريط المكونات المختارة ===== -->
+  <div id="selectedBarSentinel"></div>
+  <div class="selected-bar" id="selectedBar" hidden>
+    <div class="selected-count">
+      <span id="selectedCountText">لديك 0 مكونات</span>
+      <button class="clear-all-btn" id="clearAllBtn" type="button">🗑️ مسح الكل</button>
+    </div>
+    <div class="chip-row" id="chipRow"></div>
+  </div>
+
+  <!-- ===== اختيار المكونات ===== -->
+  <section class="section" id="ingredients-section">
+    <h2 class="section__title">ماذا لديك في الثلاجة؟</h2>
+    <p class="section__subtitle">اختر من الأقسام أدناه، أو ابحث عن مكوّن بالاسم.</p>
+
+    <div class="search-field">
+      <input type="text" id="ingredientSearch" placeholder="ابحث عن مكوّن... (حتى لو لم يكن في قائمتنا)" autocomplete="off" aria-label="ابحث عن مكوّن">
+    </div>
+    <div class="search-results" id="searchResults"></div>
+
+    <div class="scroll-row-wrap">
+      <div class="fridge-tabs scroll-row" id="fridgeTabs" role="tablist" aria-label="أقسام الثلاجة"></div>
+      <button class="scroll-arrow scroll-arrow--start" id="fridgeScrollStart" aria-label="تمرير لليمين"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      <button class="scroll-arrow scroll-arrow--end" id="fridgeScrollEnd" aria-label="تمرير لليسار"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+    </div>
+    <div class="ingredient-grid" id="ingredientGrid"></div>
+  </section>
+
+  <!-- ===== الوقت ===== -->
+  <section class="section" id="time-section">
+    <h2 class="section__title">كم لديك من الوقت؟</h2>
+    <p class="section__subtitle">اختر المدة التقريبية المتاحة للطبخ.</p>
+    <div class="time-grid" id="timeGrid">
+      <button class="time-card" data-time="10"><span class="icon">⚡</span> ١٠ دقائق</button>
+      <button class="time-card" data-time="20"><span class="icon">🍳</span> ٢٠ دقيقة</button>
+      <button class="time-card" data-time="30"><span class="icon">🥘</span> ٣٠ دقيقة</button>
+      <button class="time-card" data-time="45"><span class="icon">⏰</span> ٤٥ دقيقة أو أكثر</button>
+    </div>
+    <div class="custom-time">
+      <button class="btn-ghost" id="customTimeToggle" type="button">أو حدّد وقتاً مخصصاً</button>
+      <input type="number" id="customTimeInput" min="5" max="240" placeholder="بالدقائق" hidden>
+    </div>
+  </section>
+
+  <!-- ===== خيارات إضافية ===== -->
+  <section class="section">
+    <div class="disclosure" id="prefsDisclosure">
+      <button class="disclosure__toggle" id="prefsToggle" aria-expanded="false">
+        <span>خيارات إضافية</span>
+        <span class="chevron">⌄</span>
+      </button>
+      <div class="disclosure__panel">
+        <div class="tag-grid" id="prefsGrid">
+          <button class="tag-toggle" data-tag="نباتي">🌱 نباتي</button>
+          <button class="tag-toggle" data-tag="عالي البروتين">💪 عالي البروتين</button>
+          <button class="tag-toggle" data-tag="اقتصادي">💰 اقتصادي</button>
+          <button class="tag-toggle" data-tag="خفيف">🥗 خفيف</button>
+          <button class="tag-toggle" data-tag="سريع">⚡ سريع</button>
+        </div>
+        <p class="section__subtitle" style="margin-top:12px;">نوع الوجبة</p>
+        <div class="tag-grid" id="mealCategoryGrid">
+          <button class="tag-toggle" data-category="فطور">🌅 فطور</button>
+          <button class="tag-toggle" data-category="غداء">🍽️ غداء</button>
+          <button class="tag-toggle" data-category="عشاء">🌙 عشاء</button>
+          <button class="tag-toggle" data-category="سناك">🍿 سناك</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== زر البحث الرئيسي ===== -->
+  <div class="cta-wrap">
+    <button class="btn btn-primary btn-lg btn-block" id="searchBtn">🍳 اقترح لي وجبات</button>
+    <p class="cta-hint">
+      <button class="btn-ghost" id="surpriseBtn" type="button">🎲 فاجئني</button>
+      ·
+      <button class="btn-ghost" id="dontKnowBtn" type="button">🤷 لا أعرف ماذا أريد</button>
+    </p>
+  </div>
+
+  <!-- ===== حالة التحميل ===== -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-visual">🍳</div>
+    <div class="loading-text" id="loadingText">نبحث عن أفضل الأفكار لك...</div>
+  </div>
+
+  <!-- ===== النتائج ===== -->
+  <section class="section" id="resultsSection" hidden>
+    <div class="results-header">
+      <h2 class="section__title">وجدنا لك هذه الأفكار 🍽️</h2>
+      <p class="section__subtitle" id="aiStatusNote"></p>
+    </div>
+    <div id="resultsList"></div>
+  </section>
+
+  <!-- ===== كيف يعمل ===== -->
+  <section class="section">
+    <h2 class="section__title text-center">كيف يعمل؟</h2>
+    <div class="how-steps" style="margin-top:16px;">
+      <div class="how-step">
+        <div class="icon">🥕</div>
+        <div class="label">اختر مكوناتك</div>
+      </div>
+      <div class="how-step">
+        <div class="icon">⏱️</div>
+        <div class="label">حدد وقتك</div>
+      </div>
+      <div class="how-step">
+        <div class="icon">🍽️</div>
+        <div class="label">احصل على أفكار للطبخ</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== أفكار سريعة اليوم ===== -->
+  <section class="section" id="quick-ideas">
+    <div class="row-between">
+      <h2 class="section__title mt-0">أفكار سريعة اليوم</h2>
+      <a href="discover.html" class="btn-ghost">استكشف المزيد ←</a>
+    </div>
+    <div class="scroll-row-wrap">
+      <div class="quick-scroll scroll-row" id="quickScroll"></div>
+      <button class="scroll-arrow scroll-arrow--start" id="quickScrollStart" aria-label="تمرير لليمين"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      <button class="scroll-arrow scroll-arrow--end" id="quickScrollEnd" aria-label="تمرير لليسار"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+    </div>
+  </section>
+
+
+
+<footer class="site-footer">
+  <div class="site-footer__brand">🍳 طبختي</div>
+  <p>"ماذا أطبخ اليوم؟"</p>
+  <p class="site-footer__copy">© 2026 طبختي — كل الوصفات صُنعت لتُشارَك,  </p></footer>
+
+
+
+
+
+</main>
+
+<!-- ===== نافذة تفاصيل الوصفة ===== -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-sheet" id="detailSheet" role="dialog" aria-modal="true"></div>
+</div>
+
+<!-- ===== وضع الطبخ ===== -->
+<div class="cooking-mode" id="cookingMode">
+  <div class="cooking-header">
+    <span id="cookingRecipeName" style="font-weight:700;"></span>
+    <button class="modal-close" id="cookingClose" aria-label="إغلاق وضع الطبخ">✕</button>
+  </div>
+  <div class="progress-bar"><div class="progress-bar__fill" id="cookingProgress"></div></div>
+  <div class="cooking-body">
+    <div class="cooking-step-label" id="cookingStepLabel">الخطوة ١ من ٥</div>
+    <div class="cooking-step-text" id="cookingStepText"></div>
+  </div>
+  <div class="cooking-footer">
+    <button class="btn btn-secondary btn-block" id="cookingPrev">← السابق</button>
+    <button class="btn btn-primary btn-block" id="cookingNext">التالي →</button>
+  </div>
+</div>
+
+<!-- ===== التوست ===== -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- ===== التنقل السفلي ===== -->
+<nav class="bottom-nav">
+  <a href="/" class="active"><span class="icon">🏠</span>الرئيسية</a>
+  <a href="discover.html"><span class="icon">🍽️</span>تصفح</a>
+  <a href="favorites.html"><span class="icon">❤️</span>المفضلة</a>
+</nav>
+
+<script src="js/common.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

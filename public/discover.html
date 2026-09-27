@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تصفح وصفات جديدة — طبختي</title>
+<meta name="description" content="تصفح كل وصفات طبختي — وصفة مميزة تتجدد باستمرار، وشبكة كاملة يمكنك تصفّحها وخلطها.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="/" class="brand"><span class="brand__mark">🍳</span> طبختي</a>
+    <nav class="site-nav">
+      <a href="/">الرئيسية</a>
+      <a href="discover.html" class="active">تصفح وصفات جديدة</a>
+      <a href="favorites.html">المفضلة</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero" style="padding-top:28px;">
+    <h1 style="font-size:1.6rem;">تصفح وصفات جديدة 🔀</h1>
+    <p>وصفة مميزة تتجدد كل بضع ثوانٍ، وشبكة كاملة من وصفاتنا لتتصفحها وقت الملل.</p>
+  </section>
+
+  <!-- ===== الوصفة المميزة (تدور تلقائياً) ===== -->
+  <section id="featuredSection">
+    <div class="featured-card" id="featuredCard">
+      <div class="featured-card__hero" id="featuredHero"></div>
+      <button class="featured-nav featured-nav--prev" id="featuredPrev" aria-label="الوصفة السابقة"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      <button class="featured-nav featured-nav--next" id="featuredNext" aria-label="الوصفة التالية"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+      <div class="featured-card__body">
+        <div class="featured-card__badge">✨ اقتراح الآن</div>
+        <h2 id="featuredName"></h2>
+        <p id="featuredDesc" class="section__subtitle" style="margin:6px 0 12px;"></p>
+        <div class="recipe-card__meta" id="featuredMeta"></div>
+        <div class="recipe-card__actions" style="margin-top:14px;">
+          <button class="btn btn-primary" id="featuredViewBtn">عرض الوصفة</button>
+          <button class="icon-btn fav" id="featuredFavBtn" aria-label="حفظ في المفضلة">♡</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== فلاتر + خلط ===== -->
+  <section class="section">
+    <div class="row-between" style="margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+      <div class="tag-grid" id="categoryFilters">
+        <button class="tag-toggle selected" data-cat="">🍽️ الكل</button>
+        <button class="tag-toggle" data-cat="فطور">🌅 فطور</button>
+        <button class="tag-toggle" data-cat="غداء">🍽️ غداء</button>
+        <button class="tag-toggle" data-cat="عشاء">🌙 عشاء</button>
+        <button class="tag-toggle" data-cat="سناك">🍿 سناك</button>
+      </div>
+      <button class="btn btn-secondary" id="shuffleBtn">🔀 خلط الوصفات</button>
+    </div>
+    <div class="discover-grid" id="discoverGrid"></div>
+  </section>
+</main>
+
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-sheet" id="detailSheet" role="dialog" aria-modal="true"></div>
+</div>
+
+<div class="cooking-mode" id="cookingMode">
+  <div class="cooking-header">
+    <span id="cookingRecipeName" style="font-weight:700;"></span>
+    <button class="modal-close" id="cookingClose" aria-label="إغلاق وضع الطبخ">✕</button>
+  </div>
+  <div class="progress-bar"><div class="progress-bar__fill" id="cookingProgress"></div></div>
+  <div class="cooking-body">
+    <div class="cooking-step-label" id="cookingStepLabel"></div>
+    <div class="cooking-step-text" id="cookingStepText"></div>
+  </div>
+  <div class="cooking-footer">
+    <button class="btn btn-secondary btn-block" id="cookingPrev">← السابق</button>
+    <button class="btn btn-primary btn-block" id="cookingNext">التالي →</button>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<nav class="bottom-nav">
+  <a href="/"><span class="icon">🏠</span>الرئيسية</a>
+  <a href="discover.html" class="active"><span class="icon">🍽️</span>تصفح</a>
+  <a href="favorites.html"><span class="icon">❤️</span>المفضلة</a>
+</nav>
+
+<script src="js/common.js"></script>
+<script src="js/discover.js"></script>
+</body>
+</html>
