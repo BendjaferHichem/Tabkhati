@@ -1,17 +1,31 @@
 // server/database/db.js
-// إعداد قاعدة البيانات (SQLite) — تُستخدم SQLite لأنها لا تحتاج خادم منفصل،
-// وتعمل مباشرة من ملف واحد، وهو الخيار الأنسب لمشروع يمكن تشغيله ونشره بسهولة
-// دون الحاجة لإعداد قاعدة بيانات خارجية.
-
 const path = require('path');
+const fs = require('fs');
 const Database = require('better-sqlite3');
 
-const DB_PATH = process.env.DATABASE_URL || path.join(__dirname, 'tabkhty.db');
 const isVercel = Boolean(process.env.VERCEL);
 
-// على Vercel: نظام الملفات للقراءة فقط أثناء التشغيل، والقاعدة مُهيّأة
-// ومملوءة مسبقاً (عبر npm run seed محلياً قبل الرفع). محلياً: قراءة وكتابة
-// كالمعتاد للسماح بـ npm run seed.
+// Original location of the bundled database file
+const sourceDbPath = process.env.DATABASE_URL || path.join(__dirname, 'tabkhty.db');
+
+let DB_PATH = sourceDbPath;
+
+if (isVercel) {
+  // Path in Vercel's writable temporary filesystem
+  const targetDbPath = path.join('/tmp', 'tabkhty.db');
+
+  // Copy the database file to /tmp if it doesn't exist there yet
+  if (!fs.existsSync(targetDbPath)) {
+    if (fs.existsSync(sourceDbPath)) {
+      fs.copyFileSync(sourceDbPath, targetDbPath);
+    } else {
+      console.error(`Database file not found at ${sourceDbPath}`);
+    }
+  }
+  DB_PATH = targetDbPath;
+}
+
+// Connect to SQLite
 const db = new Database(DB_PATH, isVercel ? { readonly: true, fileMustExist: true } : {});
 
 if (!isVercel) {
@@ -23,38 +37,38 @@ function initSchema() {
   db.exec(`
     CREATE TABLE IF NOT EXISTS ingredients (
       id            INTEGER PRIMARY KEY AUTOINCREMENT,
-      name          TEXT NOT NULL UNIQUE,      -- المعرف الداخلي (إنجليزي، slug)
+      name          TEXT NOT NULL UNIQUE,
       arabic_name   TEXT NOT NULL,
       emoji         TEXT DEFAULT '',
-      category      TEXT NOT NULL,             -- خضروات، لحوم، ألبان وبيض، حبوب ونشويات، معلبات، أساسيات
-      is_staple     INTEGER DEFAULT 0          -- 1 = مكوّن أساسي متوفر غالباً (ملح، زيت..)
+      category      TEXT NOT NULL,
+      is_staple     INTEGER DEFAULT 0
     );
 
     CREATE TABLE IF NOT EXISTS recipes (
       id                INTEGER PRIMARY KEY AUTOINCREMENT,
-      name              TEXT NOT NULL,          -- الاسم بالإنجليزية (داخلي/SEO)
+      name              TEXT NOT NULL,
       arabic_name       TEXT NOT NULL,
       description       TEXT NOT NULL,
-      preparation_time  INTEGER NOT NULL,       -- بالدقائق
-      cooking_time      INTEGER NOT NULL,       -- بالدقائق
-      total_time        INTEGER NOT NULL,       -- بالدقائق
-      difficulty        TEXT NOT NULL,          -- سهلة، متوسطة، صعبة
-      category          TEXT NOT NULL,          -- فطور، غداء، عشاء، سناك
-      tags              TEXT NOT NULL DEFAULT '[]', -- JSON array: نباتي، اقتصادي...
-      instructions      TEXT NOT NULL DEFAULT '[]', -- JSON array من الخطوات
+      preparation_time  INTEGER NOT NULL,
+      cooking_time      INTEGER NOT NULL,
+      total_time        INTEGER NOT NULL,
+      difficulty        TEXT NOT NULL,
+      category          TEXT NOT NULL,
+      tags              TEXT NOT NULL DEFAULT '[]',
+      instructions      TEXT NOT NULL DEFAULT '[]',
       image_emoji       TEXT DEFAULT '🍽️',
-      image_url         TEXT DEFAULT NULL,      -- رابط صورة حقيقية اختياري (يُستخدم إن وُجد، وإلا يُستخدم بديل بصري)
-      estimated_cost    TEXT NOT NULL DEFAULT 'متوسط', -- اقتصادي / متوسط / مرتفع
+      image_url         TEXT DEFAULT NULL,
+      estimated_cost    TEXT NOT NULL DEFAULT 'متوسط',
       servings          INTEGER NOT NULL DEFAULT 2,
-      popularity        INTEGER NOT NULL DEFAULT 50 -- 0-100، تُستخدم في الترتيب
+      popularity        INTEGER NOT NULL DEFAULT 50
     );
 
     CREATE TABLE IF NOT EXISTS recipe_ingredients (
       id             INTEGER PRIMARY KEY AUTOINCREMENT,
       recipe_id      INTEGER NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
       ingredient_id  INTEGER NOT NULL REFERENCES ingredients(id) ON DELETE CASCADE,
-      quantity       TEXT NOT NULL DEFAULT '',  -- نص وصفي مثل "2 حبة" أو "كوب"
-      is_optional    INTEGER NOT NULL DEFAULT 0 -- 1 = مكوّن اختياري لا يقلل نسبة التطابق كثيراً
+      quantity       TEXT NOT NULL DEFAULT '',
+      is_optional    INTEGER NOT NULL DEFAULT 0
     );
 
     CREATE INDEX IF NOT EXISTS idx_recipe_ingredients_recipe ON recipe_ingredients(recipe_id);
